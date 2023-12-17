@@ -1,0 +1,4 @@
+/venv/
+/.idea/
+/__pycache__/
+/django_app/migrations/
