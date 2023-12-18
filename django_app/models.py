@@ -1,4 +1,11 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+
+
+def validate_permission(value: int):
+    if not 1 <= value <= 9:
+        raise ValidationError(_("%(value)s должен быть от 1 до 9"), params={"value": value})
 
 
 class Units(models.Model):
@@ -14,26 +21,27 @@ class Units(models.Model):
         320 (отдел кадров)
     """
     id = models.SmallIntegerField(primary_key=True)
-    name = models.CharField(max_length=255)
+    unitname = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.name
+        return self.unitname
 
 
 class Users(models.Model):
-    name = models.CharField(max_length=255)
+    username = models.CharField(max_length=255)
+    password = models.CharField(max_length=16)
 
     def __str__(self):
-        return self.name
+        return self.username
 
 
 class Jobs(models.Model):
-    name = models.CharField(max_length=255, blank=False)
+    jobname = models.CharField(max_length=255, blank=False)
 
     # Уровни разрешений от самого низкого (1) до самого высокого (9)
-    permission = models.SmallIntegerField()
+    permission = models.SmallIntegerField(validators=[validate_permission])
     unit = models.SmallIntegerField()
     user_jobs = models.ManyToManyField(Users, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.jobname
