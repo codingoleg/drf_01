@@ -40,15 +40,15 @@ jobs = OrderedDict({
 def create_test_tables():
     """Заполнение таблиц новыми данными"""
     for name in users:
-        Users(name=name).save()
+        Users(username=name).save()
         logging.info(msg=f'{name} created')
 
     for _id in units:
-        Units(id=_id, name=units[_id]).save()
+        Units(id=_id, unitname=units[_id]).save()
         logging.info(msg=f'{_id} {units[_id]} created')
 
     for job in jobs:
-        Jobs(name=job, permission=jobs[job][0], unit=jobs[job][1]).save()
+        Jobs(jobname=job, permission=jobs[job][0], unit=jobs[job][1]).save()
         logging.info(msg=f'{job} created')
 
     for i in range(1, len(users) + 1):
