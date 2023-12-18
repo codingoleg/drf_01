@@ -1,6 +1,13 @@
 from rest_framework import serializers
+from django.contrib.auth.models import User
 
-from .models import Units, Users, Jobs
+from .models import Units, Jobs, Users
+
+
+class UserAuthSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
 
 
 class UnitSerializer(serializers.ModelSerializer):
